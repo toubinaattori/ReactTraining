@@ -15,8 +15,8 @@ class Day extends React.Component{
   }
   render() {
     return (
-      <button className="day" onClick={() => this.setState({day: this.props.value})}>
-      {this.state.day}
+      <button className="day" onClick={() => alert("you clicked: "+this.props.value)}>
+      {this.props.value}
     </button>
     );
   }
