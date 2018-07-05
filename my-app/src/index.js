@@ -5,27 +5,58 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import myData from './weather.json';
 
+
+class Image extends React.Component{
+  constructor(props){
+    super(props);
+    this.state ={
+      isOn: null
+    }
+  }
+  render(){
+  switch(this.props.value){
+    case "sunny":
+      return <Sunny/>
+    case "cloudy":
+      return <Cloudy/>
+    default:
+      return <Rainy/>
+  }
+}
+}
+
+function Sunny(props){
+  return (<img src={require('./sunny.jpg')} alt="sunny" width="42" height="42"></img>);
+}
+
+function Rainy(props){
+  return (<img src={require('./rainy.jpg')} alt="rainy" width="42" height="42"></img>);
+}
+
+function Cloudy(props){
+  return (<img src={require('./cloudy.jpeg')} alt="cloudy" width="42" height="42"></img>);
+}
+
+
 class DayWeather extends React.Component{
   constructor(props){
     super(props);
     this.state = {
-      humidity: "2",
-      temperature: null,
-      expectedRain: null,
       description: null
     }
   }
 
   render() {
     return(
-      <div className="dayWeather"><div className="dayWeather">Humidity {this.props.value}</div>
+      <div className="dayWeather"><div className="dayWeather">Humidity {this.props.humidity}</div>
+      <div className="dayWeather">Temperature {this.props.temperature}</div>
+      <div><Image value={this.props.description}/></div>
       </div>
     )
   }
 }
 
 class Day extends React.Component{
-
   constructor(props){
     super(props);
     this.state = {
@@ -33,11 +64,11 @@ class Day extends React.Component{
       temperature: null,
       viewWeather: false
     }
-    this.showWeather = this.showWeather.bind(this);
+    this.handleClick = this.handleClick.bind(this);
   }
 
-  showWeather(dayWeather){
-    this.setState({viewWeather: true});
+  handleClick(){
+    this.setState({viewWeather: !this.state.viewWeather});
   }
 
 
@@ -46,10 +77,12 @@ class Day extends React.Component{
    let daysWeather = myData[day];
     return (
       <div>
-      <button className="day" onClick={() => {this.showWeather(daysWeather)}}>
+      <button className="day" onClick={() => {this.handleClick()}}>
       {this.props.value}
       </button>
-      {this.state.viewWeather ? <DayWeather value={daysWeather.humidity}/> : ''}
+      <div className="DaysWeather">
+      {this.state.viewWeather ? <DayWeather humidity={daysWeather.humidity} temperature={daysWeather.temperature} description={daysWeather.description}/> : ''}
+      </div>
     </div>
     );
   }
