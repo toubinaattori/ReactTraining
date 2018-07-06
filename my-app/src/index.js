@@ -48,9 +48,8 @@ class Day extends React.Component{
 
   render() {
     return(
-      <div className="dayWeather"><div className="dayWeather">Humidity {this.props.humidity}</div>
-      <div className="dayWeather">Temperature {this.props.temperature}</div>
-      <div><Image value={this.props.description}/></div>
+      <div><div>{this.props.day}</div><Image value={this.props.description}/>
+      <div className="dayWeather">{this.props.humidity} {this.props.temperature}°C</div>
       </div>
     )
   }
@@ -68,13 +67,18 @@ class DayRow extends React.Component{
   }
 
   handler(day){
-    this.setState({visibleDay: day});
+    if(this.state.visibleDay===day){
+      this.setState({visibleDay: "null"});
+    }
+    else{
+      this.setState({visibleDay: day});
+    }
   }
 
   renderDay(day){
     let daysWeather = myData[day]; 
     return <div><button className="day" onClick={() => {this.handler(day)}}>
-    {day}
+    <Day humidity={daysWeather.humidity} temperature={daysWeather.temperature} description={daysWeather.description} day={day}/>
     </button><div className="DaysWeather">
     {this.state.visibleDay===day ? <Day humidity={daysWeather.humidity} temperature={daysWeather.temperature} description={daysWeather.description}/> : ''}
     </div></div>;

@@ -3,3 +3,16 @@
   top: 50%;
   left: 50%;
 }
+
+.day{
+  float: left;
+  background-color: white;
+  border: none;
+  outline:none;
+}
+
+.day-row{
+  width: 550px;
+  margin-right: auto;
+  margin-left: auto;
+}
