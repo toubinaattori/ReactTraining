@@ -38,7 +38,7 @@ function Cloudy(props){
 }
 
 
-class DayWeather extends React.Component{
+class Day extends React.Component{
   constructor(props){
     super(props);
     this.state = {
@@ -56,55 +56,32 @@ class DayWeather extends React.Component{
   }
 }
 
-class Day extends React.Component{
-  constructor(props){
-    super(props);
-    this.state = {
-      day: null,
-      temperature: null,
-      viewWeather: false
-    }
-    this.handleClick = this.handleClick.bind(this);
-  }
-
-  handleClick(){
-    this.setState({viewWeather: !this.state.viewWeather});
-  }
-
-
-  render() {
-   let day = this.props.value;
-   let daysWeather = myData[day];
-    return (
-      <div>
-      <button className="day" onClick={() => {this.handleClick()}}>
-      {this.props.value}
-      </button>
-      <div className="DaysWeather">
-      {this.state.viewWeather ? <DayWeather humidity={daysWeather.humidity} temperature={daysWeather.temperature} description={daysWeather.description}/> : ''}
-      </div>
-    </div>
-    );
-  }
-}
-
 class DayRow extends React.Component{
   constructor(props){
     super(props);
     this.state = {
       days: Array(7).fill(null),
+      visibleDay: "null",
     }
+    this.handler = this.handler.bind(this);
+    this.renderDay = this.renderDay.bind(this);
   }
 
-  
+  handler(day){
+    this.setState({visibleDay: day});
+  }
 
   renderDay(day){
-    return <Day value={day}/>;
+    let daysWeather = myData[day]; 
+    return <div><button className="day" onClick={() => {this.handler(day)}}>
+    {day}
+    </button><div className="DaysWeather">
+    {this.state.visibleDay===day ? <Day humidity={daysWeather.humidity} temperature={daysWeather.temperature} description={daysWeather.description}/> : ''}
+    </div></div>;
   }
 
 
   render() {
-
     return (
       <div>
         <div className="day-row">{this.renderDay("Monday")}{this.renderDay("Tuesday")}
