@@ -55,6 +55,25 @@ class Day extends React.Component{
   }
 }
 
+class DayWidget extends React.Component{
+  constructor(props){
+    super(props);
+    this.state = {
+      description: null
+    }
+  }
+
+  render() {
+    return(
+      <div><div>{this.props.day}</div>
+      <div className="dayWeather">Humidity: {this.props.humidity}</div>
+      <div>Temperature: {this.props.temperature}°C</div>
+      <div>Expected rain: {this.props.expectedRain}</div>
+      </div>
+    )
+  }
+}
+
 class DayRow extends React.Component{
   constructor(props){
     super(props);
@@ -80,7 +99,7 @@ class DayRow extends React.Component{
     return <div><button className="day" onClick={() => {this.handler(day)}}>
     <Day humidity={daysWeather.humidity} temperature={daysWeather.temperature} description={daysWeather.description} day={day}/>
     </button><div className="DaysWeather">
-    {this.state.visibleDay===day ? <Day humidity={daysWeather.humidity} temperature={daysWeather.temperature} description={daysWeather.description}/> : ''}
+    {this.state.visibleDay===day ? <DayWidget humidity={daysWeather.humidity} temperature={daysWeather.temperature} description={daysWeather.description} expectedRain={daysWeather.expectedRain} day={day}/> : ''}
     </div></div>;
   }
 
